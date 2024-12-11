@@ -3,81 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript"></script>
     <title>Latin to Georgian Translator</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 400px;
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-
-        textarea {
-            width: 100%;
-            height: 100px;
-            padding: 10px;
-            border-radius: 4px;
-            border: 3px solid black;
-            font-size: 16px;
-            resize: none;
-            padding-right: 30px; /* Add space for the icon */
-        }
-
-        .textarea-container {
-            position: relative;
-            margin-bottom: 20px;
-        }
-
-        .copy-icon {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            cursor: pointer;
-            font-size: 18px;
-            color: blue;
-            translate: 0.3s ease;
-        }
-
-        .copy-icon:hover {
-            transform: scale(1.1);
-        }
-
-        .copy-icon:active {
-            transform: scale(0.95);
-        }
-
-        .copy-message {
-            color: green;
-            font-size: 14px;
-            visibility: hidden;
-            margin-top: 10px;
-        }
-    </style>
 </head>
 <body>
-
     <div class="container">
         <h1>Latin to Georgian Translator</h1>
         <textarea id="latinText" placeholder="Enter Latin Georgian text here"></textarea>
@@ -89,7 +19,7 @@
         <span class="copy-message" id="copyMessage">Copied to clipboard!</span>
         <div class="exceptions">
             <h1>Exceptions</h1>
-            <p>
+            <p class="exceptions-p">
                 dz-ძ |
                 sh-შ |
                 f-ფ |
@@ -106,56 +36,6 @@
             </p>
         </div>
     </div>
-
-    <script>
-        const transliterationMap = {
-            'dz': 'ძ', 'w': 'წ', 'ch': 'ჩ', 'sh': 'შ', 'f': 'ფ', 'gh': 'ღ',
-            'a': 'ა', 'b': 'ბ', 'g': 'გ', 'd': 'დ', 'e': 'ე', 'v': 'ვ', 'z': 'ზ', 
-            't': 'ტ', 'i': 'ი', 'k': 'კ', 'l': 'ლ', 'm': 'მ', 'n': 'ნ', 'o': 'ო',
-            'p': 'პ', 'r': 'რ', 's': 'ს', 'u': 'უ', 'q': 'ქ', 'y': 'ყ', 'x': 'ხ', 'j': 'ჯ', 
-            'c': 'ც', 'T': 'თ', 'J': 'ჟ', 'kh': 'ხ', 'PH': 'ფ', 'h': 'ჰ', 'W': 'ჭ'
-        };
-
-        const allowedUppercase = ['T', 'J', 'W'];
-
-        document.getElementById('latinText').addEventListener('input', function() {
-            let text = this.value;
-
-            // Filter out any uppercase letters not in the allowed list
-            text = text.split('').filter(char => {
-                return !(char >= 'A' && char <= 'Z') || allowedUppercase.includes(char);
-            }).join('');
-
-            this.value = text; // Set the filtered text back to the input field
-
-            let transliteratedText = rewrite(text);
-            document.getElementById('georgianText').value = transliteratedText;
-        });
-
-        function rewrite(text) {
-            for (let latin in transliterationMap) {
-                let georgian = transliterationMap[latin];
-                let regex = new RegExp(latin, 'g'); // Create a global regex for the Latin letters
-                text = text.replace(regex, georgian);
-            }
-            return text;
-        }
-
-        function copyToClipboard() {
-            const georgianText = document.getElementById('georgianText');
-            georgianText.select();
-            document.execCommand('copy');
-            
-            // Show the copied message
-            const copyMessage = document.getElementById('copyMessage');
-            copyMessage.style.visibility = 'visible';
-
-            // Hide the message after 2 seconds
-            setTimeout(() => {
-                copyMessage.style.visibility = 'hidden';
-            }, 2000);
-        }
-    </script>
-
+    <script src="script.js"></script>
 </body>
 </html>
